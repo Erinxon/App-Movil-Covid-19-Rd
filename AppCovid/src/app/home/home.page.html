@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Casos generales</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="data">
+    <ion-card color="tertiary">
+      <ion-card-header class="covid-header">Confirmados</ion-card-header>
+      <ion-card-content>{{data.confirmados}}</ion-card-content>
+    </ion-card>
+    <ion-card color="success">
+      <ion-card-header class="covid-header">Recuperados</ion-card-header>
+      <ion-card-content>{{data.recuperados}}</ion-card-content>
+    </ion-card>
+    <ion-card color="danger">
+      <ion-card-header class="covid-header">Desfunciones</ion-card-header>
+      <ion-card-content>{{data.fallecidos}}</ion-card-content>
+    </ion-card>
+    <ion-card color="dark">
+      <ion-card-header class="covid-header">Activos</ion-card-header>
+      <ion-card-content>{{casosActivos(data.confirmados,data.recuperados,data.fallecidos)}}</ion-card-content>
+    </ion-card>
+    <ion-card color="light">
+      <ion-card-header class="covid-header">Última actualización</ion-card-header>
+      <ion-card-content>{{data.ultimaActualizacion}}</ion-card-content>
+    </ion-card>
+
+  </div>
+  <div class="contanedor" *ngIf="isLoanding && !errorModel.isError">
+    <div class="spinner"></div>
+  </div>
+  <ion-row  class="ion-text-center ion-margin-top" *ngIf="errorModel.isError">
+    <ion-col size="12">
+      <label>Ocurrió  un error</label>
+    </ion-col>
+    <ion-col size="12">  
+      <ion-button expand="block" color="danger" (click)="reintentar()">Reintentar</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
