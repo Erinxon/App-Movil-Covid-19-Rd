@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ProvinciasPageRoutingModule } from './provincias-routing.module';
 
 import { ProvinciasPage } from './provincias.page';
+import { LoandingComponent } from '../shared/loanding/loanding.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ProvinciasPage } from './provincias.page';
     IonicModule,
     ProvinciasPageRoutingModule
   ],
-  declarations: [ProvinciasPage]
+  declarations: [ProvinciasPage, LoandingComponent]
 })
 export class ProvinciasPageModule {}

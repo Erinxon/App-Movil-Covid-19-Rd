@@ -9,10 +9,12 @@
 
 <ion-content>
   <div *ngIf="data && !isLoanding && !errorModel.isError">
+
     <ion-searchbar showcancelbutton="" placeholder="Buscar provincia.."
     (ionInput)="onInput($event)"
     ></ion-searchbar>
-    <ion-card color="light" *ngFor="let provincia of provincias">
+
+    <ion-card color="dark" *ngFor="let provincia of provincias">
       <ion-card-header class="covid-header">{{provincia.nombre}}</ion-card-header>
       <ion-card-content>
         <ion-row>
@@ -40,9 +42,9 @@
       <ion-card-content>{{data.ultimaActualizacion}}</ion-card-content>
     </ion-card>
   </div>
-  <div class="contanedor" *ngIf="isLoanding && !errorModel.isError">
-    <div class="spinner"></div>
-  </div>
+
+  <app-loanding *ngIf="isLoanding && !errorModel.isError"></app-loanding>
+
   <ion-row  class="ion-text-center ion-margin-top" *ngIf="errorModel.isError">
     <ion-col size="12">
       <label>Ocurrió  un error</label>

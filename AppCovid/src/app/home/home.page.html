@@ -31,9 +31,9 @@
     </ion-card>
 
   </div>
-  <div class="contanedor" *ngIf="isLoanding && !errorModel.isError">
-    <div class="spinner"></div>
-  </div>
+
+  <app-loanding *ngIf="isLoanding && !errorModel.isError"></app-loanding>
+  
   <ion-row  class="ion-text-center ion-margin-top" *ngIf="errorModel.isError">
     <ion-col size="12">
       <label>Ocurrió  un error</label>
