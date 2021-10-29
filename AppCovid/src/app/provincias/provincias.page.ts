@@ -4,8 +4,6 @@ import { ErrorModel } from '../models/error.models';
 import { Provincia } from '../models/provincia.models';
 import { CovidService } from '../services/covid.service';
 
-type tipoOrdenacion = 'asc' | 'desc';
-
 @Component({
   selector: 'app-provincias',
   templateUrl: './provincias.page.html',
@@ -20,6 +18,14 @@ export class ProvinciasPage implements OnInit {
   };
   provincias!: Provincia[];
 
+  tiposOrdenacion: string[] = ['Ascendente', 'Descendente'];
+  ordnaciones: string[] = ['Confirmados', 'Recuperados', 'Fallecidos'];
+
+  tipoOrdenacion: string = "Ascendente";
+  ordenacion: string = "Confirmados";
+
+
+  
   constructor(private covidService: CovidService) { }
 
   ngOnInit() {
@@ -32,7 +38,7 @@ export class ProvinciasPage implements OnInit {
       if(c.success){
         this.data = c.data;
         this.provincias = c.data.covidPorProvincia;
-        this.ordenarListaProvincias('desc');
+        this.ordenarListaProvincias();
         this.setError(false, '')
       }else{
         this.setError(true, 'Ocurrió  un error')
@@ -47,18 +53,20 @@ export class ProvinciasPage implements OnInit {
     return activos;
   }
 
-  ordenarListaProvincias(orden: tipoOrdenacion): void {
+  ordenarListaProvincias(): void {
     for(let i = 0; i < this.provincias.length; i++)
     {
       for(let j = i + 1; j < this.provincias.length; j++){
-        if(orden === 'asc'){
-          if(Number(this.provincias[i].confirmados) > Number(this.provincias[j].confirmados)){
+        if(this.tipoOrdenacion === 'Ascendente'){
+          if(Number(this.provincias[i][this.ordenacion.toLowerCase()]) >
+           Number(this.provincias[j][this.ordenacion.toLowerCase()])){
             const aux = this.provincias[i];
             this.provincias[i] = this.provincias[j];
             this.provincias[j] = aux;
           }  
         }else{
-          if(Number(this.provincias[i].confirmados) < Number(this.provincias[j].confirmados)){
+          if(Number(this.provincias[i][this.ordenacion.toLowerCase()]) < 
+          Number(this.provincias[j][this.ordenacion.toLowerCase()])){
             const aux = this.provincias[i];
             this.provincias[i] = this.provincias[j];
             this.provincias[j] = aux;
@@ -68,13 +76,16 @@ export class ProvinciasPage implements OnInit {
     }
   }
 
+  
+
+  onChange(event: any): void {
+    this.ordenarListaProvincias();
+  }
 
   onInput(event: any): void {
     this.provincias = this.data.covidPorProvincia;
     const searchTerm = event.srcElement.value;
-
     if(!searchTerm) return;
-
     this.provincias = this.data.covidPorProvincia.
                       filter(p => p.nombre.toLowerCase().match(searchTerm.toLowerCase()));
   }

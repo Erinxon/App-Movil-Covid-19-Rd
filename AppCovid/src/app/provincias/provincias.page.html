@@ -14,6 +14,23 @@
     (ionInput)="onInput($event)"
     ></ion-searchbar>
 
+    <ion-row>
+      <ion-col size="8">
+        <ion-item>
+          <ion-label>Ordenar por</ion-label>
+          <ion-select [(ngModel)]="ordenacion" (ngModelChange)="onChange($event)">
+            <ion-select-option [value]="item" *ngFor="let item of ordnaciones">{{item}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4">
+        <ion-item>
+          <ion-select [(ngModel)]="tipoOrdenacion" (ngModelChange)="onChange($event)">
+            <ion-select-option [value]="item" *ngFor="let item of tiposOrdenacion">{{item}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
     <ion-card color="dark" *ngFor="let provincia of provincias">
       <ion-card-header class="covid-header">{{provincia.nombre}}</ion-card-header>
       <ion-card-content>
